@@ -14,6 +14,8 @@ new Vue({
         createContact(){
             const {...contact} = this.form
             console.log(contact);
+
+            this.form.name = this.form.value = ''
         }
     }
 })
