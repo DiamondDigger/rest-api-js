@@ -9,13 +9,18 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <title>REST API</title>
+
+    <style>
+        [v-cloak] {
+            display: none
+        }
+    </style>
 </head>
 <body>
 
 
-<div class="container pt-3" id="app">
+<div class="container pt-3" id="app" v-cloak>
     <h1>REST API</h1>
-
     <form class="form-inline mb-3" @submit.prevent="createContact">
         <div class="input-group mb-2 mr-2">
             <label for="name" class="mr-3">Name</label>
@@ -25,17 +30,19 @@
             <label for="value" class="mr-3">Value</label>
             <input type="text" class="form-control" id="value" v-model="form.value">
         </div>
-            <button class="btn btn-primary mb-2" type="submit">Create</button>
-
-        <div class="card" style="width: 100%">
+        <button class="btn btn-primary mb-2" type="submit">Create</button>
+    </form>
+    <div v-if="contacts.length">
+        <div class="card" style="width: 100%" v-for="contact in contacts">
             <div class="card-body">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Value</p>
+                <h5 class="card-title">{{contact.name}}</h5>
+                <p class="card-text">{{contact.value}}</p>
                 <button class="btn btn-primary">Mark down</button>
                 <button class="btn btn-danger">Delete</button>
             </div>
         </div>
-    </form>
+    </div>
+    <p v-else>Sorry, no any contacts yet</p>
 
 </div>
 
