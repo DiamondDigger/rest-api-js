@@ -13,17 +13,17 @@
 <body>
 
 
-<div class="container pt-3">
+<div class="container pt-3" id="app">
     <h1>REST API</h1>
 
-    <form class="form-inline mb-3" >
+    <form class="form-inline mb-3" @submit.prevent="createContact">
         <div class="input-group mb-2 mr-2">
             <label for="name" class="mr-3">Name</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" id="name" v-model="form.name">
         </div>
         <div class="input-group mb-2 mr-2">
             <label for="value" class="mr-3">Value</label>
-            <input type="text" class="form-control" id="value">
+            <input type="text" class="form-control" id="value" v-model="form.value">
         </div>
             <button class="btn btn-primary mb-2" type="submit">Create</button>
 
