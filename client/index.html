@@ -35,10 +35,10 @@
     <div v-if="contacts.length">
         <div class="card" style="width: 100%" v-for="contact in contacts">
             <div class="card-body">
-                <h5 class="card-title">{{contact.name}}</h5>
+                <h5 class="card-title" :style="{color: contact.marked ? 'green' : 'black'}">{{contact.name}}</h5>
                 <p class="card-text">{{contact.value}}</p>
-                <button class="btn btn-primary">Mark down</button>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-primary" @click="markContact(contact.id)">Mark down</button>
+                <button class="btn btn-danger" @click="deleteContact(contact.id)">Delete</button>
             </div>
         </div>
     </div>
