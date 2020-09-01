@@ -8,18 +8,16 @@ new Vue({
                 name: '',
                 value: ''
             },
-            contacts:[
-                {name: 'Kenny', value: '3-423-534-34', marked: false}
-            ]
+            contacts: []
         }
     },
     computed: {
-        canCreate(){
+        canCreate() {
             return this.form.name.trim() && this.form.value.trim()
         }
     },
     methods: {
-        createContact(){
+        createContact() {
             const {...contact} = this.form
             console.log(contact);
 
@@ -27,12 +25,38 @@ new Vue({
 
             this.form.name = this.form.value = ''
         },
-        markContact(id){
+        markContact(id) {
             const contact = this.contacts.find(c => c.id === id)
             contact.marked = true
         },
-        deleteContact(id){
+        deleteContact(id) {
             this.contacts = this.contacts.filter(c => c.id !== id)
-        }
+        },
+    },
+    async mounted(){
+        const data = await request('http://localhost:3000/api/contacts')
+        console.log(data)
     }
 })
+
+async function request(url, method = 'GET', data = null){
+    try{
+        const headers = {}
+        let body
+
+        if(data){
+            headers['Content-Type'] = 'application/json'
+            body = JSON.stringify(data)
+        }
+
+
+        const response = await fetch(url, {
+            method,
+            headers,
+            body
+        })
+        return response.json()
+    } catch(e){
+        console.warn('Error:', e.message)
+    }
+}
