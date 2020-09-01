@@ -13,6 +13,11 @@ new Vue({
             ]
         }
     },
+    computed: {
+        canCreate(){
+            return this.form.name.trim() && this.form.value.trim()
+        }
+    },
     methods: {
         createContact(){
             const {...contact} = this.form

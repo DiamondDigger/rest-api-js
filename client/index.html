@@ -30,7 +30,7 @@
             <label for="value" class="mr-3">Value</label>
             <input type="text" class="form-control" id="value" v-model="form.value">
         </div>
-        <button class="btn btn-primary mb-2" type="submit">Create</button>
+        <button class="btn btn-primary mb-2" type="submit" :disabled="!canCreate" >Create</button>
     </form>
     <div v-if="contacts.length">
         <div class="card" style="width: 100%" v-for="contact in contacts">
