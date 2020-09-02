@@ -1,14 +1,26 @@
 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js'
 
+Vue.component('loader', {
+    template:
+        `
+    <div style="display: flex; justify-content: center; align-items: center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+`
+})
+
 new Vue({
     el: '#app',
     data() {
         return {
+            loading: false,
             form: {
                 name: '',
                 value: ''
             },
-            contacts: []
+            contacts: [],
         }
     },
     computed: {
@@ -31,10 +43,14 @@ new Vue({
         },
         deleteContact(id) {
             this.contacts = this.contacts.filter(c => c.id !== id)
-        },
+        }
     },
     async mounted(){
+        this.loading = true
+        console.log('Start loading - ', this.loading)
         this.contacts = await request('http://localhost:3000/api/contacts')
+        this.loading = false
+        console.log('End loading, loading  - ', this.loading)
     }
 })
 
