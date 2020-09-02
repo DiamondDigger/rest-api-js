@@ -34,8 +34,7 @@ new Vue({
         },
     },
     async mounted(){
-        const data = await request('http://localhost:3000/api/contacts')
-        console.log(data)
+        this.contacts = await request('http://localhost:3000/api/contacts')
     }
 })
 
@@ -55,7 +54,7 @@ async function request(url, method = 'GET', data = null){
             headers,
             body
         })
-        return response.json()
+        return await response.json()
     } catch(e){
         console.warn('Error:', e.message)
     }
