@@ -41,6 +41,14 @@ app.delete('/api/contacts/:id', (req, res) => {
         .json({message: 'contact have been deleted'})
 })
 
+//PUT
+app.put('/api/contacts/:id', (req, res) => {
+    const indx = CONTACTS.findIndex(c => c.id === req.params.id)
+    CONTACTS[indx] = {...req.body}
+    res
+        .json(CONTACTS[indx])
+})
+
 
 app.use(express.static(path.resolve(__dirname, 'client')))
 
