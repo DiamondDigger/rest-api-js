@@ -1,11 +1,11 @@
-const express    = require('express')
-const path       = require('path')
-const {v4}       = require('uuid')
-const cors       = require('cors')
-const app        = express()
+const express = require('express')
+const path = require('path')
+const {v4} = require('uuid')
+const cors = require('cors')
+const app = express()
 
-const CONTACTS = [
-    {id: v4() ,name: 'Kenny-Benny-Manny', value: '3-423-534-34', marked: false}
+let CONTACTS = [
+    {id: v4(), name: 'Kenny-Benny-Manny', value: '3-423-534-34', marked: false}
 ]
 
 //For work with request (req, res)
@@ -16,7 +16,7 @@ app.use(cors())
 
 //GET
 app.get('/api/contacts', (req, res) => {
-    setTimeout(()=>{
+    setTimeout(() => {
         res
             .status(200)
             .json(CONTACTS)
@@ -25,11 +25,20 @@ app.get('/api/contacts', (req, res) => {
 
 //POST
 app.post('/api/contacts', (req, res) => {
-    const contact = {...req.body, id: v4(), marked: false}
+    const contact = {id: v4(),...req.body, marked: false}
     CONTACTS.push(contact)
     res
         .status(201)
         .json(contact)
+})
+
+//DELETE
+app.delete('/api/contacts/:id', (req, res) => {
+    console.log('req.param.id =', req.params.id)
+    CONTACTS = CONTACTS.filter(c => c.id !== req.params.id)
+    res
+        .status(200)
+        .json({message: 'contact have been deleted'})
 })
 
 
