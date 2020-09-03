@@ -29,11 +29,11 @@ new Vue({
         }
     },
     methods: {
-        createContact() {
+        async createContact() {
             const {...contact} = this.form
-            console.log(contact);
 
-            this.contacts.push({...contact, id: Date.now(), marked: false})
+            const newContact = await request('http://localhost:3000/api/contacts', 'POST', contact)
+            this.contacts.push(newContact)
 
             this.form.name = this.form.value = ''
         },
@@ -49,6 +49,7 @@ new Vue({
         this.loading = true
         console.log('Start loading - ', this.loading)
         this.contacts = await request('http://localhost:3000/api/contacts')
+        console.log(this.contacts)
         this.loading = false
         console.log('End loading, loading  - ', this.loading)
     }
@@ -60,16 +61,15 @@ async function request(url, method = 'GET', data = null){
         let body
 
         if(data){
-            headers['Content-Type'] = 'application/json'
-            body = JSON.stringify(data)
+                headers['Content-Type'] = 'application/json';
+                body = JSON.stringify(data);
         }
-
 
         const response = await fetch(url, {
             method,
             headers,
             body
-        })
+        });
         return await response.json()
     } catch(e){
         console.warn('Error:', e.message)
